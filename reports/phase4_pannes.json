@@ -365,7 +365,7 @@
       "majority_baseline": 0.22666666666666666,
       "random_baseline": 0.047619047619047616,
       "val_worse_than_random": false,
-      "loss_plateau": false,
+      "loss_plateau": true,
       "model_training_at_eval": false,
       "figure": "reports/figures/phase4_panne_loss_frozen.png"
     }

@@ -11,13 +11,9 @@ Projet en deux parties :
 | Partie | Statut | Documentation |
 |--------|--------|---------------|
 | Partie 1 — Canulars | **~90 % complet** | [Cahier des charges](docs/CAHIER_DES_CHARGES.md) |
-| Partie 2 — Formes / Attention | **Phases 0-17 faites** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
+| Partie 2 — Formes / Attention | **Phases 0-4 faites** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
 
-**Rapport Conseil** : [`RAPPORT.md`](RAPPORT.md) — sections phases 0-17 remplies.
-
-```bash
-python scripts/run_phases_4_17.py   # Phases 4-17 (après phases 0-3)
-```
+**Rapport Conseil** : [`RAPPORT.md`](RAPPORT.md) — sections phases 0-4 remplies.
 
 ## Installation
 
@@ -38,6 +34,7 @@ pip install -r requirements-part2.txt
 python -m src.shape.eda          # Phase 0 — chiffres dossier 4 juillet
 python -m src.shape.overfit_test # Phase 2 — test d'acceptation (8 relevés)
 python -m src.shape.train        # Phase 3 — PyTorch vs TF-IDF linéaire
+python -m src.shape.pannes       # Phase 4 — carnet de pannes (3 scénarios)
 ```
 
 > **Colab recommandé** pour les phases GPU (3, 5, 14). Pas de GPU local requis pour phases 10-13 (attention manuelle sur petits textes).
@@ -90,11 +87,14 @@ Détail : `reports/results.json`, figures dans `reports/figures/`.
 
 ## Partie 2 — Prochaines étapes
 
-1. ~~**Phase 0**~~ : `python -m src.shape.eda` — chiffres dans `RAPPORT.md`, figure `volume_annuel.png`
-2. **Phase 1** : rédiger critique comptage vs texte (page sans code)
-3. **Phase 2-3** : PyTorch shape classifier vs TF-IDF linéaire
-4. **Phase 10-13** : attention codée à la main (`src/attention/`)
-5. **Phase 14-17** : HuggingFace + LoRA + déploiement
+1. ~~**Phase 0**~~ : EDA dossier 4 juillet
+2. ~~**Phase 1**~~ : critique comptage vs texte
+3. ~~**Phase 2-3**~~ : overfit 8 relevés + PyTorch vs TF-IDF
+4. ~~**Phase 4**~~ : carnet de pannes (`python -m src.shape.pannes`)
+5. **Phase 5** : budget de calcul (chronomètre)
+6. **Phases 6-9** : réceptive field, batch=4, masque vocabulaire, explicabilité
+7. **Phases 10-13** : attention codée à la main
+8. **Phases 14-17** : HuggingFace + LoRA + déploiement
 
 Voir [docs/PARTIE2_ROADMAP.md](docs/PARTIE2_ROADMAP.md) pour le plan complet.
 

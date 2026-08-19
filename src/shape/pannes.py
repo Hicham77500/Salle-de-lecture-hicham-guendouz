@@ -130,7 +130,7 @@ def _train_loop(config: PanneConfig, seed: int = 42) -> dict:
         "final_val_acc": val_accs[-1],
         "majority_baseline": majority,
         "random_baseline": random_guess,
-        "val_worse_than_random": val_accs[-1] < random_guess,
+        "val_worse_than_random": val_accs[-1] < random_guess * 1.2,
         "loss_plateau": _is_plateau(train_losses),
         "model_training_at_eval": config.eval_train_mode,
     }

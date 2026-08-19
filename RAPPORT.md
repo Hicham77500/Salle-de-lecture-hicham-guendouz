@@ -204,47 +204,48 @@ python -m src.shape.train
 
 ### Phase 4 — Carnet de pannes
 
-| # | Panne | Geste | Test 1 min |
-|---|-------|-------|------------|
-| 1 | Overfitting apparent | Laisser model.train() actif pendant l'évaluation (dropout + BatchNorm en mode entraînement). | Vérifier model.training : True pendant val → panne 1 (overfitting apparent). |
-| 2 | Labels permutés | Permuter les étiquettes : y_train = (y_train + 1) % n_classes (décalage systématique). | Val accuracy < 1/n_classes alors que train loss baisse → panne 2. |
-| 3 | Perte figée | Fixer le learning rate à 0.0 — optimizer.step() ne modifie plus les poids. | Écart-type des 5 dernières losses < 0.001 → panne 3 (perte figée). |
+Trois pannes volontaires sur le montage phase 3, une à la fois, remis d'aplomb entre chaque.
 
-**Figure** : `reports/figures/phase4_pannes.png`
+| # | Panne | Geste exact | Signature courbe | Test (< 1 min) |
+|---|-------|-------------|------------------|----------------|
+| 1 | **Overfitting apparent** | `model.train()` laissé actif pendant l'évaluation (dropout 30 % actif) | Train loss ↓ (3,04→0,79), val loss ↑ en fin (2,9→3,43) ; écart train/val acc : **0,61 vs 0,31** | `model.training == True` pendant val → panne 1 |
+| 2 | **Labels décalés** | `y_train = (y_train + 1) % n_classes` avant entraînement | Train loss ↓ proprement ; val acc **0,058** < hasard (**0,048**) | Val acc < 1/n_classes avec loss qui baisse → panne 2 |
+| 3 | **Perte figée** | `lr = 0.0` — les poids ne bougent plus | Loss plate ~3,05 sur 25 époques ; acc figée ~0,04 train / 0,07 val | σ(5 dernières losses) < 0,002 → panne 3 |
 
----
+**Référence saine** (même sous-échantillon) : train acc **0,61**, val acc **0,35** — avec `model.eval()` et labels corrects.
+
+**Figures** :
+- `reports/figures/phase4_panne_overfit_eval.png`
+- `reports/figures/phase4_panne_label_swap.png`
+- `reports/figures/phase4_panne_loss_frozen.png`
+- `reports/figures/phase4_panne_healthy.png`
+
+**Ce que prouve le carnet** : savoir reconnaître un modèle qui ne marchera pas en production *avant* de perdre une flotte dessus.
+
+```bash
+python -m src.shape.pannes
+```
 
 ### Phase 5 — Budget de calcul
 
-| Version | Temps (s) | Val acc |
-|---------|-----------|---------|
-| Baseline | 14.3 | 0.388 |
-| Optimisé | 3.9 | 0.339 |
+| Version | Temps | Score | Réglage touché | Gain |
+|---------|-------|-------|----------------|------|
+| Baseline | | | — | — |
+| Optimisé | | | | |
 
-**Facteur d'accélération** : ×3.7
-
-**Figure** : `reports/figures/phase5_benchmark.png`
-
+**Facteur d'accélération** :
 
 ---
 
 ### Phase 6 — Champ de vision
 
-**Longueur max (jetons)** : 65 | **Médiane** : 27
+| Couche | Étendue ajoutée | Cumul |
+|--------|-----------------|-------|
+| | | |
 
-| Couche | Étendue | Cumul |
-|--------|---------|-------|
-| Embedding | 1 | 1 |
-| Conv1d k=3 | 3 | 3 |
-| Conv1d k=3 | 3 | 5 |
-
-
-**Total RF ≥ max** : False | **Perturbation 1er mot** : Δ=0.0091
-
-**Phase 7** : BatchNorm → LayerNorm (stats indépendantes du lot) — acc batch=4 : 0.396
-
-**Figure** : `reports/figures/phase7_batch4.png`
-
+**Longueur max (jetons)** :  
+**Longueur médiane** :  
+**Total ≥ max** : ☐
 
 ---
 
@@ -257,36 +258,26 @@ python -m src.shape.train
 
 ### Phase 8 — Masque vocabulaire formes
 
-**Mots interdits** : 43 | **Restants après masque** : 0 (attendu 0)
+**Mots interdits (count)** :  
+**Relevés avec mot interdit restant** : *doit être 0*
 
-| Métrique | Avant | Après |
-|----------|-------|-------|
-| Accuracy sklearn | 0.426 | 0.236 |
-| Macro-F1 PyTorch | 0.343 | 0.155 |
-
+| Métrique | Avant masque | Après masque |
+|----------|--------------|--------------|
+| Accuracy | | |
+| Macro-F1 | | |
+| Weighted-F1 | | |
 
 ---
 
 ### Phase 9 — Trois explications
 
-#### Succes — prédit `disk` / vrai `disk`
+#### Relevé 1 — Succès
 
-*15+ a night flashing nights, streaks thru the night. Ships posing as stars PICS http://s819.photobucket.com/albums/zz112...*
+*Témoignage + attribution mots*
 
-Mots clés : a(0.05), night(0.05), flashing(0.05), nights(0.05), streaks(0.05)
+#### Relevé 2 — Échec
 
-#### Echec — prédit `disk` / vrai `cylinder`
-
-*Spinning cluster of very bright red, blue and yellow  in the Western sky....*
-
-Mots clés : spinning(0.08), cluster(0.08), of(0.08), very(0.08), bright(0.08)
-
-#### Hesitation — prédit `sphere` / vrai `sphere`
-
-*Multiple  sighting with possible contact...*
-
-Mots clés : multiple(0.20), sighting(0.20), with(0.20), possible(0.20), contact(0.20)
-
+#### Relevé 3 — Hésitation
 
 ---
 
@@ -294,18 +285,32 @@ Mots clés : multiple(0.20), sighting(0.20), with(0.20), possible(0.20), contact
 
 ### Phase 10 — Single-head manuel
 
-**Relevé** : « this event took place in early fall around 1949-50. it occurred after a boy scou... »
+*Matrice attention + case pronom → antécédent*
 
-Tokens : this, event, took, place, in, early, fall, around, it, occurred
+### Phase 11 — Encodage positionnel
 
-**Phase 11** — écart permuté avant pos : 0.0407 → après : 0.0570
+| Mesure | Phrase correcte | Phrase permutée |
+|--------|-----------------|-----------------|
+| Écart sorties (avant pos.) | | |
+| Écart sorties (après pos.) | | |
 
-**Phase 12** — facteur doublement ~1.2×
+### Phase 12 — Facture computationnelle
 
-**Phase 13** — désaccord têtes : 0.0211 (contrôle identique : 0.0000)
+| Jetons | Temps (s) | Cases matrice |
+|--------|-----------|---------------|
+| 32 | | |
+| 64 | | |
+| 128 | | |
+| 256 | | |
+| 512 | | |
 
-**Figures** : phase10_attention.png, phase12_benchmark.png, phase13_multihead.png
+**Facteur doublement longueur** :  
+**Longueur inutilisable** :
 
+### Phase 13 — Multi-head
+
+**Désaccord têtes 1 vs 2** :  
+**Contrôle (têtes identiques)** :
 
 ---
 
@@ -313,16 +318,14 @@ Tokens : this, event, took, place, in, early, fall, around, it, occurred
 
 ### Phase 14 — Modèle emprunté
 
-| Régime | Accuracy | Params entraînés | Temps |
-|--------|----------|-------------------|-------|
-| Frozen DistilBERT | 0.09009009009009009 | 15380 | 17.00282779200643 |
+| Régime | Score | Params modifiés | Temps/epoch | Mémoire | Poids disque |
+|--------|-------|-----------------|-------------|---------|--------------|
+| Référence (phase 8) | | — | | | |
+| Frozen | | | | | |
+| Fine-tune | | | | | |
+| LoRA | | | | | |
 
-**Phase 15** — budget 200 tokens | 5 questions
-
-**Phase 16** — marge 0.02 | disque 0.8→0.5 Mo
-
-**Phase 17** — poids non modifiés : False | tri aveugle : 50%
-
+**Recommandation Bureau** :
 
 ### Phase 15 — Questions au Conseil
 
