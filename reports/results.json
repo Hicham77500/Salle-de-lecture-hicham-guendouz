@@ -1,0 +1,128 @@
+{
+  "n_rows": 80332,
+  "n_canulars": 660,
+  "baseline": {
+    "accuracy": 0.9933774834437086,
+    "precision": 0.0,
+    "recall": 0.0
+  },
+  "metrics": {
+    "confusion_matrix": [
+      [
+        19460,
+        490
+      ],
+      [
+        114,
+        19
+      ]
+    ],
+    "precision": 0.03732809430255403,
+    "recall": 0.14285714285714285,
+    "accuracy": 0.9699248120300752,
+    "pr_auc": 0.04032534457400525
+  },
+  "optimal_threshold": {
+    "seuil": 0.85,
+    "cout": 3872.0,
+    "fn": 127,
+    "fp": 31
+  },
+  "calibration": {
+    "brier_raw": 0.031309313805545434,
+    "brier_calibrated": 0.006521318388265466
+  },
+  "label_shift": {
+    "taux_train": 0.008747033145778352,
+    "taux_test": 0.006622516556291391,
+    "n_canular_train": 527,
+    "n_canular_test": 133
+  },
+  "yearly_rates": [
+    {
+      "annee": 1998,
+      "taux_canular": 0.0,
+      "n_releves": 890
+    },
+    {
+      "annee": 1999,
+      "taux_canular": 0.0006999533364442371,
+      "n_releves": 4286
+    },
+    {
+      "annee": 2000,
+      "taux_canular": 0.0003287310979618672,
+      "n_releves": 3042
+    },
+    {
+      "annee": 2001,
+      "taux_canular": 0.0002860411899313501,
+      "n_releves": 3496
+    },
+    {
+      "annee": 2002,
+      "taux_canular": 0.00023640661938534278,
+      "n_releves": 4230
+    },
+    {
+      "annee": 2003,
+      "taux_canular": 0.00041736227045075126,
+      "n_releves": 4792
+    },
+    {
+      "annee": 2004,
+      "taux_canular": 0.00038284839203675346,
+      "n_releves": 5224
+    },
+    {
+      "annee": 2005,
+      "taux_canular": 0.0045385779122541605,
+      "n_releves": 5288
+    },
+    {
+      "annee": 2006,
+      "taux_canular": 0.011593543987269835,
+      "n_releves": 4399
+    },
+    {
+      "annee": 2007,
+      "taux_canular": 0.01723076923076923,
+      "n_releves": 4875
+    },
+    {
+      "annee": 2008,
+      "taux_canular": 0.025580941222417497,
+      "n_releves": 5121
+    },
+    {
+      "annee": 2009,
+      "taux_canular": 0.01465633423180593,
+      "n_releves": 5936
+    },
+    {
+      "annee": 2010,
+      "taux_canular": 0.013720197930724246,
+      "n_releves": 4446
+    },
+    {
+      "annee": 2011,
+      "taux_canular": 0.016203703703703703,
+      "n_releves": 5616
+    },
+    {
+      "annee": 2012,
+      "taux_canular": 0.004202719406674907,
+      "n_releves": 8090
+    },
+    {
+      "annee": 2013,
+      "taux_canular": 0.005157365776249669,
+      "n_releves": 7562
+    },
+    {
+      "annee": 2014,
+      "taux_canular": 0.01579466929911155,
+      "n_releves": 3039
+    }
+  ]
+}
