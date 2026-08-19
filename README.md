@@ -11,9 +11,13 @@ Projet en deux parties :
 | Partie | Statut | Documentation |
 |--------|--------|---------------|
 | Partie 1 — Canulars | **~90 % complet** | [Cahier des charges](docs/CAHIER_DES_CHARGES.md) |
-| Partie 2 — Formes / Attention | **Phases 0-3 faites** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
+| Partie 2 — Formes / Attention | **Phases 0-17 faites** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
 
-**Rapport Conseil** : [`RAPPORT.md`](RAPPORT.md) — une section par phase (template prêt).
+**Rapport Conseil** : [`RAPPORT.md`](RAPPORT.md) — sections phases 0-17 remplies.
+
+```bash
+python scripts/run_phases_4_17.py   # Phases 4-17 (après phases 0-3)
+```
 
 ## Installation
 

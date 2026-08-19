@@ -1,0 +1,92 @@
+{
+  "phase10": {
+    "snippet": "this event took place in early fall around 1949-50. it occurred after a boy scout meeting in the baptist church. the bap",
+    "tokens": [
+      "this",
+      "event",
+      "took",
+      "place",
+      "in",
+      "early",
+      "fall",
+      "around",
+      "it",
+      "occurred",
+      "after",
+      "a",
+      "boy",
+      "scout",
+      "meeting",
+      "in",
+      "the",
+      "baptist",
+      "church",
+      "the"
+    ],
+    "row_sums": [
+      1.0,
+      1.0,
+      0.9999999403953552,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.9999999403953552,
+      0.9999999403953552,
+      1.0,
+      0.9999999403953552,
+      1.0,
+      1.0000001192092896,
+      0.9999998807907104,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "output_shape": [
+      1,
+      20,
+      32
+    ]
+  },
+  "phase11": {
+    "diff_before_pos": 0.04067152738571167,
+    "diff_after_pos": 0.057025473564863205
+  },
+  "phase12": {
+    "benchmark": [
+      {
+        "tokens": 32,
+        "seconds": 0.00013069180131424217,
+        "matrix_cells": 1024
+      },
+      {
+        "tokens": 64,
+        "seconds": 0.0001289249979890883,
+        "matrix_cells": 4096
+      },
+      {
+        "tokens": 128,
+        "seconds": 0.000154958400526084,
+        "matrix_cells": 16384
+      },
+      {
+        "tokens": 256,
+        "seconds": 0.00023288340016733856,
+        "matrix_cells": 65536
+      },
+      {
+        "tokens": 512,
+        "seconds": 0.0005035081994719803,
+        "matrix_cells": 262144
+      }
+    ],
+    "doubling_factor_128_64": 1.201926724398313
+  },
+  "phase13": {
+    "disagree": 0.021137921139597893,
+    "disagree_identical_heads": 0.0
+  }
+}

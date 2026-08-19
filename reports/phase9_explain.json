@@ -1,0 +1,175 @@
+{
+  "cases": [
+    {
+      "type": "succes",
+      "temoignage": "15+ a night flashing nights, streaks thru the night. Ships posing as stars PICS http://s819.photobucket.com/albums/zz112/itis33/8-5-201",
+      "vraie_forme": "disk",
+      "forme_predite": "disk",
+      "attribution": [
+        {
+          "mot": "a",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "night",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "flashing",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "nights",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "streaks",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "thru",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "the",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "night",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "ships",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "posing",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "as",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "stars",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "pics",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "http",
+          "poids": 0.05000000074505806
+        },
+        {
+          "mot": "s",
+          "poids": 0.05000000074505806
+        }
+      ],
+      "commentaire": {
+        "retenu": "Mots à fort poids listés ci-dessus",
+        "ignore": "Mots contextuels (the, a, was) dilués",
+        "lecon": "Échec révèle forme absente du texte ou commentaire trop court"
+      }
+    },
+    {
+      "type": "echec",
+      "temoignage": "Spinning cluster of very bright red, blue and yellow  in the Western sky.",
+      "vraie_forme": "cylinder",
+      "forme_predite": "disk",
+      "attribution": [
+        {
+          "mot": "spinning",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "cluster",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "of",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "very",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "bright",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "red",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "blue",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "and",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "yellow",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "in",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "the",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "western",
+          "poids": 0.07692307978868484
+        },
+        {
+          "mot": "sky",
+          "poids": 0.07692307978868484
+        }
+      ],
+      "commentaire": {
+        "retenu": "Mots à fort poids listés ci-dessus",
+        "ignore": "Mots contextuels (the, a, was) dilués",
+        "lecon": "Échec révèle forme absente du texte ou commentaire trop court"
+      }
+    },
+    {
+      "type": "hesitation",
+      "temoignage": "Multiple  sighting with possible contact",
+      "vraie_forme": "sphere",
+      "forme_predite": "sphere",
+      "attribution": [
+        {
+          "mot": "multiple",
+          "poids": 0.20000000298023224
+        },
+        {
+          "mot": "sighting",
+          "poids": 0.20000000298023224
+        },
+        {
+          "mot": "with",
+          "poids": 0.20000000298023224
+        },
+        {
+          "mot": "possible",
+          "poids": 0.20000000298023224
+        },
+        {
+          "mot": "contact",
+          "poids": 0.20000000298023224
+        }
+      ],
+      "commentaire": {
+        "retenu": "Mots à fort poids listés ci-dessus",
+        "ignore": "Mots contextuels (the, a, was) dilués",
+        "lecon": "Échec révèle forme absente du texte ou commentaire trop court"
+      }
+    }
+  ]
+}

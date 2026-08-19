@@ -204,34 +204,47 @@ python -m src.shape.train
 
 ### Phase 4 — Carnet de pannes
 
-| # | Panne | Geste | Signature courbe |
-|---|-------|-------|------------------|
-| 1 | Overfitting | | |
-| 2 | LR trop haut | | |
-| 3 | Loss figée | | |
+| # | Panne | Geste | Test 1 min |
+|---|-------|-------|------------|
+| 1 | Overfitting apparent | Laisser model.train() actif pendant l'évaluation (dropout + BatchNorm en mode entraînement). | Vérifier model.training : True pendant val → panne 1 (overfitting apparent). |
+| 2 | Labels permutés | Permuter les étiquettes : y_train = (y_train + 1) % n_classes (décalage systématique). | Val accuracy < 1/n_classes alors que train loss baisse → panne 2. |
+| 3 | Perte figée | Fixer le learning rate à 0.0 — optimizer.step() ne modifie plus les poids. | Écart-type des 5 dernières losses < 0.001 → panne 3 (perte figée). |
+
+**Figure** : `reports/figures/phase4_pannes.png`
 
 ---
 
 ### Phase 5 — Budget de calcul
 
-| Version | Temps | Score | Réglage touché | Gain |
-|---------|-------|-------|----------------|------|
-| Baseline | | | — | — |
-| Optimisé | | | | |
+| Version | Temps (s) | Val acc |
+|---------|-----------|---------|
+| Baseline | 14.3 | 0.388 |
+| Optimisé | 3.9 | 0.339 |
 
-**Facteur d'accélération** :
+**Facteur d'accélération** : ×3.7
+
+**Figure** : `reports/figures/phase5_benchmark.png`
+
 
 ---
 
 ### Phase 6 — Champ de vision
 
-| Couche | Étendue ajoutée | Cumul |
-|--------|-----------------|-------|
-| | | |
+**Longueur max (jetons)** : 65 | **Médiane** : 27
 
-**Longueur max (jetons)** :  
-**Longueur médiane** :  
-**Total ≥ max** : ☐
+| Couche | Étendue | Cumul |
+|--------|---------|-------|
+| Embedding | 1 | 1 |
+| Conv1d k=3 | 3 | 3 |
+| Conv1d k=3 | 3 | 5 |
+
+
+**Total RF ≥ max** : False | **Perturbation 1er mot** : Δ=0.0091
+
+**Phase 7** : BatchNorm → LayerNorm (stats indépendantes du lot) — acc batch=4 : 0.396
+
+**Figure** : `reports/figures/phase7_batch4.png`
+
 
 ---
 
@@ -244,26 +257,36 @@ python -m src.shape.train
 
 ### Phase 8 — Masque vocabulaire formes
 
-**Mots interdits (count)** :  
-**Relevés avec mot interdit restant** : *doit être 0*
+**Mots interdits** : 43 | **Restants après masque** : 0 (attendu 0)
 
-| Métrique | Avant masque | Après masque |
-|----------|--------------|--------------|
-| Accuracy | | |
-| Macro-F1 | | |
-| Weighted-F1 | | |
+| Métrique | Avant | Après |
+|----------|-------|-------|
+| Accuracy sklearn | 0.426 | 0.236 |
+| Macro-F1 PyTorch | 0.343 | 0.155 |
+
 
 ---
 
 ### Phase 9 — Trois explications
 
-#### Relevé 1 — Succès
+#### Succes — prédit `disk` / vrai `disk`
 
-*Témoignage + attribution mots*
+*15+ a night flashing nights, streaks thru the night. Ships posing as stars PICS http://s819.photobucket.com/albums/zz112...*
 
-#### Relevé 2 — Échec
+Mots clés : a(0.05), night(0.05), flashing(0.05), nights(0.05), streaks(0.05)
 
-#### Relevé 3 — Hésitation
+#### Echec — prédit `disk` / vrai `cylinder`
+
+*Spinning cluster of very bright red, blue and yellow  in the Western sky....*
+
+Mots clés : spinning(0.08), cluster(0.08), of(0.08), very(0.08), bright(0.08)
+
+#### Hesitation — prédit `sphere` / vrai `sphere`
+
+*Multiple  sighting with possible contact...*
+
+Mots clés : multiple(0.20), sighting(0.20), with(0.20), possible(0.20), contact(0.20)
+
 
 ---
 
@@ -271,32 +294,18 @@ python -m src.shape.train
 
 ### Phase 10 — Single-head manuel
 
-*Matrice attention + case pronom → antécédent*
+**Relevé** : « this event took place in early fall around 1949-50. it occurred after a boy scou... »
 
-### Phase 11 — Encodage positionnel
+Tokens : this, event, took, place, in, early, fall, around, it, occurred
 
-| Mesure | Phrase correcte | Phrase permutée |
-|--------|-----------------|-----------------|
-| Écart sorties (avant pos.) | | |
-| Écart sorties (après pos.) | | |
+**Phase 11** — écart permuté avant pos : 0.0407 → après : 0.0570
 
-### Phase 12 — Facture computationnelle
+**Phase 12** — facteur doublement ~1.2×
 
-| Jetons | Temps (s) | Cases matrice |
-|--------|-----------|---------------|
-| 32 | | |
-| 64 | | |
-| 128 | | |
-| 256 | | |
-| 512 | | |
+**Phase 13** — désaccord têtes : 0.0211 (contrôle identique : 0.0000)
 
-**Facteur doublement longueur** :  
-**Longueur inutilisable** :
+**Figures** : phase10_attention.png, phase12_benchmark.png, phase13_multihead.png
 
-### Phase 13 — Multi-head
-
-**Désaccord têtes 1 vs 2** :  
-**Contrôle (têtes identiques)** :
 
 ---
 
@@ -304,14 +313,16 @@ python -m src.shape.train
 
 ### Phase 14 — Modèle emprunté
 
-| Régime | Score | Params modifiés | Temps/epoch | Mémoire | Poids disque |
-|--------|-------|-----------------|-------------|---------|--------------|
-| Référence (phase 8) | | — | | | |
-| Frozen | | | | | |
-| Fine-tune | | | | | |
-| LoRA | | | | | |
+| Régime | Accuracy | Params entraînés | Temps |
+|--------|----------|-------------------|-------|
+| Frozen DistilBERT | 0.09009009009009009 | 15380 | 17.00282779200643 |
 
-**Recommandation Bureau** :
+**Phase 15** — budget 200 tokens | 5 questions
+
+**Phase 16** — marge 0.02 | disque 0.8→0.5 Mo
+
+**Phase 17** — poids non modifiés : False | tri aveugle : 50%
+
 
 ### Phase 15 — Questions au Conseil
 

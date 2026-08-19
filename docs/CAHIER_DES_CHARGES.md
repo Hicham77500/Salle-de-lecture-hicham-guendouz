@@ -63,7 +63,7 @@ Document de référence croisant l'implémentation actuelle avec :
 
 | Phase | Objectif | Statut |
 |-------|----------|--------|
-| 2 | Test d'acceptation : mémoriser 8 relevés | **À FAIRE** |
+| Phase 2 overfit 8 | **FAIT** | 2 itérations, 8/8 corrects |
 | 3 | PyTorch vs linéaire (TF-IDF) ; courbes train/val | **À FAIRE** |
 | 4 | Carnet de pannes (3 pannes volontaires) | **À FAIRE** |
 | 5 | Optimisation budget calcul (chronomètre) | **À FAIRE** |

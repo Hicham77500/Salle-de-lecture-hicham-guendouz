@@ -1,0 +1,121 @@
+{
+  "phase14": {
+    "model": "distilbert-base-uncased",
+    "regimes": {
+      "frozen": {
+        "metrics": {
+          "accuracy": 0.09009009009009009,
+          "macro_f1": 0.021135531135531134
+        },
+        "params_trained": 15380,
+        "train_seconds": 17.00282779200643,
+        "memory_mb_approx": 500,
+        "disk_mb_approx": 250
+      },
+      "reference_phase8_acc": 0.35
+    },
+    "recommendation": "Frozen + tête linéaire — seul régime mesuré sur CPU avec subset"
+  },
+  "phase15": {
+    "budget_tokens": 200,
+    "questions": [
+      {
+        "question": "What shape did witnesses report as light?",
+        "cited_ids": [
+          4013,
+          304,
+          4481
+        ],
+        "scores": [
+          0.4649288410585454,
+          0.3383579006376072,
+          0.303077020795499
+        ]
+      },
+      {
+        "question": "Reports mentioning fireball or meteor",
+        "cited_ids": [
+          2307,
+          4972,
+          2942
+        ],
+        "scores": [
+          0.5849636303710396,
+          0.5381563184240794,
+          0.44365572271079334
+        ]
+      },
+      {
+        "question": "Triangle shaped objects",
+        "cited_ids": [
+          654,
+          2158,
+          4307
+        ],
+        "scores": [
+          0.5176714299895833,
+          0.46363102805742834,
+          0.46009875480182955
+        ]
+      },
+      {
+        "question": "Observations over cities at night",
+        "cited_ids": [
+          906,
+          205,
+          887
+        ],
+        "scores": [
+          0.47850937671442856,
+          0.43373286928523935,
+          0.29342355001416137
+        ]
+      },
+      {
+        "question": "Disk or saucer descriptions",
+        "cited_ids": [
+          4849,
+          580,
+          1884
+        ],
+        "scores": [
+          0.7089783400295929,
+          0.5653868904749393,
+          0.4890104983997777
+        ]
+      }
+    ],
+    "sourced_ratio": 1.0,
+    "naive_baseline_hits": 0.8
+  },
+  "phase16": {
+    "margin_score_announced": 0.02,
+    "disk_mb_before": 0.81305,
+    "disk_mb_after_estimated": 0.48783,
+    "latency_ms_before_est": 120,
+    "latency_ms_after_est": 45,
+    "throughput_before": 8,
+    "throughput_after": 22,
+    "stop_reason": "INT8 quant + joblib compress — marge respectée"
+  },
+  "phase17": {
+    "generation_method": "HF generate with temperature",
+    "weights_modified": false,
+    "grid": [
+      {
+        "temperature": 0.3,
+        "effect": "repetitive"
+      },
+      {
+        "temperature": 1.2,
+        "effect": "incoherent"
+      },
+      {
+        "temperature": 0.8,
+        "effect": "recommended"
+      }
+    ],
+    "blind_sort_accuracy": 0.5,
+    "recommended": "temperature=0.8, top_k=50"
+  }
+}

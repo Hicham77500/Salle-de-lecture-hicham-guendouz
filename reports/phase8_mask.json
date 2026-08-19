@@ -1,0 +1,114 @@
+{
+  "n_forbidden_words": 43,
+  "forbidden_sample": [
+    "changing",
+    "changings",
+    "chevron",
+    "chevrons",
+    "cigar",
+    "cigars",
+    "circle",
+    "circles",
+    "cone",
+    "cones",
+    "cross",
+    "crosss",
+    "cylinder",
+    "cylinders",
+    "diamond",
+    "diamonds",
+    "disk",
+    "disks",
+    "egg",
+    "eggs",
+    "fireball",
+    "fireballs",
+    "flash",
+    "flashs",
+    "formation",
+    "formations",
+    "light",
+    "lights",
+    "object",
+    "objects"
+  ],
+  "remaining_with_forbidden": 0,
+  "before": {
+    "sklearn": {
+      "accuracy": 0.42624540628828095,
+      "macro_f1": 0.3291312532447114,
+      "weighted_f1": 0.43417292792512785,
+      "n_features": 8000
+    },
+    "pytorch": {
+      "accuracy": 0.4126684360963659,
+      "macro_f1": 0.34304339925597355,
+      "weighted_f1": 0.41688041601901854,
+      "vocab_size": 69033,
+      "embed_dim": 256
+    }
+  },
+  "after": {
+    "sklearn": {
+      "accuracy": 0.23550428746427113,
+      "macro_f1": 0.15734007312835432,
+      "weighted_f1": 0.25554163424455706,
+      "n_features": 8000
+    },
+    "pytorch": {
+      "accuracy": 0.23974071049407922,
+      "macro_f1": 0.15541786251754586,
+      "weighted_f1": 0.24824543826663312,
+      "vocab_size": 67350,
+      "embed_dim": 256
+    }
+  },
+  "drop": {
+    "sklearn_acc": 0.19074111882400982,
+    "pytorch_macro_f1": 0.1876255367384277
+  },
+  "decisions": {
+    "rows_raw": 80332,
+    "missing_shape": 1932,
+    "action_missing": "exclure (2922 attendus sur fichier cours)",
+    "empty_short_comments": 35,
+    "action_comments": "exclure commentaires < 5 caractères",
+    "fourre_tout_count": 11232,
+    "action_fourre_tout": "fusionner unknown/other/inconnu → other_merged",
+    "action_doublons": "round→circle, changed→changing",
+    "rare_shapes_merged": [
+      "delta",
+      "crescent",
+      "pyramid",
+      "flare",
+      "hexagon",
+      "dome"
+    ],
+    "min_class_count": 50,
+    "n_classes": 21,
+    "n_rows": 78365,
+    "class_counts": {
+      "light": 16560,
+      "other_merged": 11232,
+      "triangle": 7860,
+      "circle": 7605,
+      "fireball": 6206,
+      "sphere": 5385,
+      "disk": 5204,
+      "oval": 3731,
+      "formation": 2457,
+      "cigar": 2057,
+      "changing": 1962,
+      "flash": 1328,
+      "rectangle": 1295,
+      "cylinder": 1282,
+      "diamond": 1178,
+      "chevron": 952,
+      "egg": 759,
+      "teardrop": 750,
+      "cone": 316,
+      "cross": 233,
+      "rare": 13
+    }
+  }
+}

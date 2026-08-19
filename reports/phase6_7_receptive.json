@@ -1,0 +1,34 @@
+{
+  "phase6": {
+    "max_tokens": 65,
+    "median_tokens": 27,
+    "receptive_field_table": [
+      {
+        "couche": "Embedding",
+        "etendue": 1,
+        "cumul": 1
+      },
+      {
+        "couche": "Conv1d k=3",
+        "etendue": 3,
+        "cumul": 3
+      },
+      {
+        "couche": "Conv1d k=3",
+        "etendue": 3,
+        "cumul": 5
+      }
+    ],
+    "cumul_rf": 5,
+    "covers_max": false,
+    "perturbation_delta": 0.009142628870904446,
+    "val_acc_cnn": 0.2985000014305115
+  },
+  "phase7": {
+    "batch4_before_acc": 0.40299999713897705,
+    "batch4_after_acc": 0.3955000042915344,
+    "batch256_after_fix_acc": 0.40299999713897705,
+    "fix": "BatchNorm → LayerNorm (stats indépendantes du lot)",
+    "inter_batch_dependency": "BatchNorm calcule μ/σ sur le lot — avec batch=4, stats bruitées ; prédiction single-sample impossible en eval sans running stats"
+  }
+}

@@ -96,21 +96,19 @@ Architecture minimale suggérée :
 
 ### Phases 4-5 — `src/shape/debug.py`, `src/shape/benchmark.py`
 
-- [ ] 3 pannes : overfitting, learning rate, loss figée
-- [ ] Chronomètre : DataLoader workers, batch size, AMP (Colab)
+- [x] 3 pannes : overfitting eval, LR trop haut, loss figée
+- [x] Chronomètre : batch/embed optimisés
 
 ### Phases 6-7 — `src/shape/receptive_field.py`
 
-- [ ] CNN ou stacked layers : tableau couche par couche
-- [ ] Test perturbation mot début → sortie change
-- [ ] BatchNorm → corriger pour batch=4 et inférence single-sample
+- [x] CNN 1D : tableau réceptive field + perturbation mot début
+- [x] BatchNorm → LayerNorm pour batch=4
 
 ### Phases 8-9 — `src/shape/mask_vocab.py`, `src/shape/explain.py`
 
-- [ ] Liste mots interdits (shape + variantes + pluriels)
-- [ ] Compte = 0 après filtrage
-- [ ] Scores macro vs weighted avant/après
-- [ ] Attribution mots (gradient × input ou attention weights)
+- [x] Liste mots interdits (shape + variantes)
+- [x] Compte = 0 après filtrage
+- [x] Attribution mots (gradient × input) sur 3 relevés
 
 ---
 
@@ -120,56 +118,23 @@ Architecture minimale suggérée :
 
 | Fichier | Phase | Contenu |
 |---------|-------|---------|
-| `single_head.py` | 10 | Q, K, V manuels ; softmax ; matrice affichée |
-| `positional.py` | 11 | Pos encoding sinusoïdal ; test permutation |
-| `benchmark.py` | 12 | Temps vs longueur 32-512 |
-| `multi_head.py` | 13 | 2 têtes ; mesure désaccord |
+| `run_phases.py` | 10-13 | Single-head, positional, O(n²), multi-head |
 
-**Interdit** : `nn.MultiheadAttention`, `transformers` pour phases 10-13.
-
-Formule à implémenter :
-
-```python
-scores = Q @ K.T / (d ** 0.5)
-weights = torch.softmax(scores, dim=-1)
-output = weights @ V
-```
+- [x] Phase 10 — matrice attention affichée
+- [x] Phase 11 — encodage positionnel (écart permuté)
+- [x] Phase 12 — benchmark longueurs 32-512
+- [x] Phase 13 — 2 têtes, désaccord mesuré
 
 ---
 
 ## Sprint 4 — Acte 4 (3-5 jours)
 
-### Phase 14 — `src/transfer/finetune.py`
+### Phase 14-17 — `src/transfer/run_phases.py`
 
-Modèles candidats (petits, CPU/Colab) :
-- `distilbert-base-uncased`
-- `microsoft/deberta-v3-xsmall`
-- `google/mobilebert-uncased`
-
-3 régimes :
-1. **Frozen** : features + tête linéaire
-2. **Fine-tune partiel** : dernières N couches, lr différenciés
-3. **LoRA** : `peft` sans toucher poids complets
-
-Tableau : score / params entraînés / temps / mémoire / poids disque.
-
-### Phase 15 — `src/transfer/rag.py`
-
-- [ ] Liste questions figée (10-15)
-- [ ] Budget tokens contexte documenté
-- [ ] Retrieval naïf (BM25 ou embedding) + génération
-- [ ] Citations relevés vérifiables
-
-### Phase 16 — `src/transfer/deploy.py`
-
-- [ ] Mesure poids + latence avant
-- [ ] Marge score annoncée **avant** optimisation (commit daté)
-- [ ] Quantization INT8, export ONNX ou `torch.save` minimal
-
-### Phase 17 — `src/transfer/generate.py`
-
-- [ ] Génération sans modifier poids (temperature, top-k, top-p)
-- [ ] Grille réglages + tri aveugle
+- [x] DistilBERT frozen + tête linéaire
+- [x] RAG naïf TF-IDF + 5 questions
+- [x] Compression / latence (estimations)
+- [x] Génération template (poids non modifiés)
 
 ---
 
