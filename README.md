@@ -11,7 +11,7 @@ Projet en deux parties :
 | Partie | Statut | Documentation |
 |--------|--------|---------------|
 | Partie 1 — Canulars | **~90 % complet** | [Cahier des charges](docs/CAHIER_DES_CHARGES.md) |
-| Partie 2 — Formes / Attention | **Préparé, à implémenter** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
+| Partie 2 — Formes / Attention | **Phase 0 faite** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
 
 **Rapport Conseil** : [`RAPPORT.md`](RAPPORT.md) — une section par phase (template prêt).
 
@@ -84,8 +84,8 @@ Détail : `reports/results.json`, figures dans `reports/figures/`.
 
 ## Partie 2 — Prochaines étapes
 
-1. **Phase 0** : `python -m src.shape.eda` → remplir `RAPPORT.md`
-2. **Phase 1** : rédiger critique comptage vs texte
+1. ~~**Phase 0**~~ : `python -m src.shape.eda` — chiffres dans `RAPPORT.md`, figure `volume_annuel.png`
+2. **Phase 1** : rédiger critique comptage vs texte (page sans code)
 3. **Phase 2-3** : PyTorch shape classifier vs TF-IDF linéaire
 4. **Phase 10-13** : attention codée à la main (`src/attention/`)
 5. **Phase 14-17** : HuggingFace + LoRA + déploiement

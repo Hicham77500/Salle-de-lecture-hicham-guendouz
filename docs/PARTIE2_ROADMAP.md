@@ -52,11 +52,11 @@ Dépendances ajoutées : `torch`, `transformers`, `accelerate`, `peft` (LoRA), `
 
 ### Phase 0 — `src/shape/eda.py`
 
-- [ ] Charger `releves_klaxo3.csv` sans en-tête
-- [ ] Choisir et justifier date : `datetime` (observation) vs `date_posted` (publication)
-- [ ] Calculer : jours couverts, moy/jour, count 4 juillet, rang 4 juillet, max jour, top 10 jours
-- [ ] Courbe volume annuel → `reports/figures/volume_annuel.png`
-- [ ] Remplir section Phase 0 dans `RAPPORT.md`
+- [x] Charger `releves_klaxo3.csv` sans en-tête
+- [x] Choisir et justifier date : `datetime` (observation) vs `date_posted` (publication)
+- [x] Calculer : jours couverts, moy/jour, count 4 juillet, rang 4 juillet, max jour, top 10 jours
+- [x] Courbe volume annuel → `reports/figures/volume_annuel.png`
+- [x] Remplir section Phase 0 dans `RAPPORT.md`
 
 ### Phase 1 — RAPPORT écrit
 
