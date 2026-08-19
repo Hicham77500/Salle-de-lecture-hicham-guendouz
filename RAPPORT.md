@@ -126,14 +126,38 @@ En résumé : le chiffre du 4 juillet mesure la **densité d'observation humaine
 
 ### Phase 2 — Test d'acceptation (8 relevés)
 
+**Architecture** : `Embedding(118, 64) → mean pooling → Linear(8)` — PyTorch, Adam lr=0,05.
+
+**8 relevés sélectionnés** (formes distinctes) :
+
+| # | datetime | Forme vraie | Forme prédite | Extrait comments |
+|---|----------|-------------|---------------|------------------|
+| 1 | 6/14/2005 18:00 | triangle | triangle | « at around 6 pm i was looking in the sky and i saw a triangle shaped thing… » |
+| 2 | 6/14/2009 02:00 | circle | circle | « …there was a purple circle shaped o… » |
+| 3 | 11/2/1985 01:00 | cigar | cigar | « As traveling North on Route 22, NY… object with colored light » |
+| 4 | 11/21/2011 13:00 | fireball | fireball | « A fireball with a tail that seemed to me maybe a comet?… » |
+| 5 | 6/14/2004 20:00 | disk | disk | « The time was between 8:05 pm to 8:38 pm… » |
+| 6 | 1/12/2002 21:30 | rectangle | rectangle | « …observed a rectangular object in the north east skies… » |
+| 7 | 1/12/2003 07:02 | oval | oval | « …a bright oval body… » |
+| 8 | 6/12/2012 23:00 | chevron | chevron | « Saw craft coming from NYC… large dome light… » |
+
 | Métrique | Valeur |
 |----------|--------|
-| Itérations | |
-| Loss finale | |
-| 8/8 corrects | ☐ |
+| Itérations | **2** |
+| Loss finale | **1,515** |
+| 8/8 corrects | **☑** |
 
-**Ce que ce test prouve** :  
-**Ce qu'il ne prouve pas** :
+**Changements si échec** : aucun — convergence du premier coup (8 classes, 8 exemples, textes longs et distincts).
+
+**Figure** : `reports/figures/phase2_overfit_loss.png`
+
+**Ce que ce test prouve** : la boucle d'apprentissage PyTorch fonctionne de bout en bout (tokenisation → embedding → pooling → loss → backprop). Le montage peut mémoriser des exemples.
+
+**Ce qu'il ne prouve pas** : aucune généralisation. Aucune performance sur la transmission entière. Un modèle qui échoue ici ne mérite pas le budget de calcul de la phase 3.
+
+```bash
+python -m src.shape.overfit_test
+```
 
 ---
 

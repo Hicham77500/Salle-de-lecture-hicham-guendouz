@@ -76,8 +76,9 @@ Décisions à documenter dans RAPPORT :
 
 ### Phase 2 — `src/shape/overfit_test.py`
 
-- [ ] 8 relevés, entraînement jusqu'à 100 % train
-- [ ] Courbe loss, itérations, liste des changements si échec
+- [x] 8 relevés, entraînement jusqu'à 100 % train (2 itérations)
+- [x] Courbe loss → `reports/figures/phase2_overfit_loss.png`
+- [x] Résultats JSON → `reports/phase2_overfit.json`
 
 ### Phase 3 — `src/shape/train.py`
 

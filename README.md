@@ -11,7 +11,7 @@ Projet en deux parties :
 | Partie | Statut | Documentation |
 |--------|--------|---------------|
 | Partie 1 — Canulars | **~90 % complet** | [Cahier des charges](docs/CAHIER_DES_CHARGES.md) |
-| Partie 2 — Formes / Attention | **Phases 0-1 faites** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
+| Partie 2 — Formes / Attention | **Phases 0-2 faites** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
 
 **Rapport Conseil** : [`RAPPORT.md`](RAPPORT.md) — une section par phase (template prêt).
 
@@ -32,6 +32,7 @@ python scripts/run_pipeline.py
 ```bash
 pip install -r requirements-part2.txt
 python -m src.shape.eda          # Phase 0 — chiffres dossier 4 juillet
+python -m src.shape.overfit_test # Phase 2 — test d'acceptation (8 relevés)
 ```
 
 > **Colab recommandé** pour les phases GPU (3, 5, 14). Pas de GPU local requis pour phases 10-13 (attention manuelle sur petits textes).

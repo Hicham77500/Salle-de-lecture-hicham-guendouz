@@ -1,0 +1,72 @@
+{
+  "epochs": 2,
+  "final_loss": 1.5145667791366577,
+  "accuracy": 1.0,
+  "samples": [
+    {
+      "index": 0,
+      "datetime": "6/14/2005 18:00",
+      "true_shape": "triangle",
+      "pred_shape": "triangle",
+      "comment": "at around 6 pm i was looking in the sky and i saw a triangle shaped thing in the sky. it was moving roughly 600kmph and "
+    },
+    {
+      "index": 1,
+      "datetime": "6/14/2009 02:00",
+      "true_shape": "circle",
+      "pred_shape": "circle",
+      "comment": "it was 2 in the mornig. me and my friend were just sitting outside until i looked up, there was a purple circle shaped o"
+    },
+    {
+      "index": 2,
+      "datetime": "11/2/1985 01:00",
+      "true_shape": "cigar",
+      "pred_shape": "cigar",
+      "comment": "As traveling North on Route 22, NY approx town Patterson, my son and I had stopped to see this object with colored light"
+    },
+    {
+      "index": 3,
+      "datetime": "11/21/2011 13:00",
+      "true_shape": "fireball",
+      "pred_shape": "fireball",
+      "comment": "A fireball with a tail that seemed to me maybe a comet? But as I kept looking it slowed down, and turned a direction, th"
+    },
+    {
+      "index": 4,
+      "datetime": "6/14/2004 20:00",
+      "true_shape": "disk",
+      "pred_shape": "disk",
+      "comment": ">>>The time was between 8:05 pm to 8:38 pm.  Of course, I arrived home at 8:38p.m., but the sighting was between those t"
+    },
+    {
+      "index": 5,
+      "datetime": "1/12/2002 21:30",
+      "true_shape": "rectangle",
+      "pred_shape": "rectangle",
+      "comment": "While sitting around the campfire, my son and I observed a rectangular object in the north east skies of northern Phoeni"
+    },
+    {
+      "index": 6,
+      "datetime": "1/12/2003 07:02",
+      "true_shape": "oval",
+      "pred_shape": "oval",
+      "comment": "At the time just when sun rises looking towards sun rise vertical plane with ~45 degree (elevation) a bright oval body a"
+    },
+    {
+      "index": 7,
+      "datetime": "6/12/2012 23:00",
+      "true_shape": "chevron",
+      "pred_shape": "chevron",
+      "comment": "Saw craft coming from NYC and it had a large dome light on it. Dome light went off and it went behind a cloud and never "
+    }
+  ],
+  "hyperparams": {
+    "lr": 0.05,
+    "embed_dim": 64,
+    "max_epochs": 500,
+    "optimizer": "Adam",
+    "architecture": "Embedding(118, 64) → mean pool → Linear(8)"
+  },
+  "changes_log": [],
+  "vocab_size": 118
+}
