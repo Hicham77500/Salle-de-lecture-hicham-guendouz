@@ -8,9 +8,10 @@ import torch.nn as nn
 
 class ShapeClassifier(nn.Module):
     """
-    Embedding → mean pooling → Linear.
+    Embedding → mean pooling → (optionnel) MLP → Linear.
 
-    Architecture minimale réutilisable en phase 3.
+    Architecture minimale réutilisable en phase 2 (hidden_dim=None).
+    Phase 3 utilise hidden_dim pour battre le baseline linéaire.
     """
 
     def __init__(
@@ -18,15 +19,24 @@ class ShapeClassifier(nn.Module):
         vocab_size: int,
         n_classes: int,
         embed_dim: int = 64,
+        hidden_dim: int | None = None,
+        dropout: float = 0.0,
         padding_idx: int = 0,
     ):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim, padding_idx=padding_idx)
-        self.classifier = nn.Linear(embed_dim, n_classes)
+        if hidden_dim:
+            self.classifier = nn.Sequential(
+                nn.Linear(embed_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Dropout(dropout),
+                nn.Linear(hidden_dim, n_classes),
+            )
+        else:
+            self.classifier = nn.Linear(embed_dim, n_classes)
 
     def forward(self, token_ids: torch.Tensor, lengths: torch.Tensor) -> torch.Tensor:
-        # token_ids: (batch, seq_len)
-        embedded = self.embedding(token_ids)  # (batch, seq, dim)
+        embedded = self.embedding(token_ids)
         mask = (token_ids != 0).unsqueeze(-1).float()
         summed = (embedded * mask).sum(dim=1)
         lengths = lengths.clamp(min=1).unsqueeze(-1).float()

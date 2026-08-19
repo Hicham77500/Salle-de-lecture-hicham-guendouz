@@ -82,11 +82,11 @@ Décisions à documenter dans RAPPORT :
 
 ### Phase 3 — `src/shape/train.py`
 
-- [ ] Baseline : `TfidfVectorizer` + `LogisticRegression` (sklearn)
-- [ ] Modèle PyTorch : Embedding + pooling + Linear ( puis RNN/CNN )
-- [ ] Même split, mêmes classes
-- [ ] Courbes train + val sur même figure
-- [ ] Dummy « classe majoritaire »
+- [x] Baseline : `TfidfVectorizer` + `SGDClassifier` (log-loss, courbes)
+- [x] Modèle PyTorch : Embedding + bigrammes + MLP(256)
+- [x] Même split temporel, mêmes 21 classes
+- [x] Courbes train + val → `reports/figures/phase3_curves.png`
+- [x] Dummy « classe majoritaire » + résultats JSON
 
 Architecture minimale suggérée :
 

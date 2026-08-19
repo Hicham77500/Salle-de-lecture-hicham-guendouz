@@ -1,0 +1,108 @@
+{
+  "split": {
+    "strategy": "temporal 75/25 sur datetime (observation)",
+    "n_train": 58773,
+    "n_val": 19592
+  },
+  "decisions": {
+    "rows_raw": 80332,
+    "missing_shape": 1932,
+    "action_missing": "exclure (2922 attendus sur fichier cours)",
+    "empty_short_comments": 35,
+    "action_comments": "exclure commentaires < 5 caractères",
+    "fourre_tout_count": 11232,
+    "action_fourre_tout": "fusionner unknown/other/inconnu → other_merged",
+    "action_doublons": "round→circle, changed→changing",
+    "rare_shapes_merged": [
+      "delta",
+      "crescent",
+      "pyramid",
+      "flare",
+      "hexagon",
+      "dome"
+    ],
+    "min_class_count": 50,
+    "n_classes": 21,
+    "n_rows": 78365,
+    "class_counts": {
+      "light": 16560,
+      "other_merged": 11232,
+      "triangle": 7860,
+      "circle": 7605,
+      "fireball": 6206,
+      "sphere": 5385,
+      "disk": 5204,
+      "oval": 3731,
+      "formation": 2457,
+      "cigar": 2057,
+      "changing": 1962,
+      "flash": 1328,
+      "rectangle": 1295,
+      "cylinder": 1282,
+      "diamond": 1178,
+      "chevron": 952,
+      "egg": 759,
+      "teardrop": 750,
+      "cone": 316,
+      "cross": 233,
+      "rare": 13
+    }
+  },
+  "n_classes": 21,
+  "classes": [
+    "changing",
+    "chevron",
+    "cigar",
+    "circle",
+    "cone",
+    "cross",
+    "cylinder",
+    "diamond",
+    "disk",
+    "egg",
+    "fireball",
+    "flash",
+    "formation",
+    "light",
+    "other_merged",
+    "oval",
+    "rare",
+    "rectangle",
+    "sphere",
+    "teardrop",
+    "triangle"
+  ],
+  "metrics": {
+    "majority": {
+      "accuracy": 0.2144242547978767,
+      "macro_f1": 0.016815670075032072,
+      "weighted_f1": 0.07571943802007984
+    },
+    "sklearn_linear": {
+      "accuracy": 0.4280828909759085,
+      "macro_f1": 0.33252924405715933,
+      "weighted_f1": 0.4350138272178484,
+      "n_features": 8000
+    },
+    "pytorch": {
+      "accuracy": 0.39756022866476115,
+      "macro_f1": 0.3398056237415293,
+      "weighted_f1": 0.39909057682861204,
+      "vocab_size": 69033,
+      "embed_dim": 256
+    }
+  },
+  "pytorch_beats_sklearn": {
+    "accuracy": false,
+    "macro_f1": true
+  },
+  "pipeline_text_to_number": {
+    "texte_brut": "comments (html.unescape, min 5 car.)",
+    "tokenisation": "regex [a-zA-Z']+ → indices vocab (train only, min_freq=3)",
+    "pytorch_entree": "Tokenisation unigrams+bigrams (min_freq=2) → Embedding(69033, 256) → mean pool → MLP(256) → logits(21)"
+  },
+  "hyperparams": {
+    "n_epochs": 40,
+    "seed": 42
+  }
+}

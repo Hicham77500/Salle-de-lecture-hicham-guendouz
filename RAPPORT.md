@@ -164,17 +164,43 @@ python -m src.shape.overfit_test
 ### Phase 3 — Battre le service statistique
 
 **Décisions jeu de données** :
-- Trous (2 922) :
-- Fourre-tout (`unknown`, `other`) :
-- Doublons (`round`/`circle`, etc.) :
 
-| Modèle | Accuracy | Macro-F1 | Classes |
-|--------|----------|----------|---------|
-| Classe majoritaire | | | |
-| Linéaire (TF-IDF) | | | |
-| PyTorch (nôtre) | | | |
+| Décision | Règle appliquée | Effet |
+|----------|-----------------|-------|
+| Trous (1 932 sans forme) | **Exclure** | Pas de classe `unknown` artificielle — on ne prédit que sur des relevés étiquetés |
+| Fourre-tout (`unknown`, `other`) | **Fusionner** → `other_merged` | 11 232 relevés regroupés (14,3 % du jeu) |
+| Doublons sémantiques | `round`→`circle`, `changed`→`changing` | Réduit les classes redondantes |
+| Formes rares (< 50 ex.) | **Fusionner** → `rare` | 6 formes (delta, crescent, pyramid, flare, hexagon, dome) |
+| Commentaires vides/courts | Exclure si < 5 caractères | 35 relevés retirés |
 
----
+**Split** : temporel 75/25 sur `datetime` (observation) — cohérent avec partie 1 ; le modèle ne lit pas l'avenir.
+
+| Statistique | Valeur |
+|-------------|--------|
+| Relevés gardés | **78 365** |
+| Classes retenues | **21** |
+| Train / Val | 58 773 / 19 592 |
+
+**Du texte brut au premier nombre (PyTorch)** :
+1. `comments` → `html.unescape`, filtrage longueur
+2. Tokenisation regex + bigrammes (`min_freq=2`, vocab train only)
+3. Indices entiers → `Embedding(256)` → mean pooling → `MLP(256)` → logits
+
+| Modèle | Accuracy | Macro-F1 | Weighted-F1 |
+|--------|----------|----------|-------------|
+| Classe majoritaire (`light`) | 0,214 | 0,017 | 0,076 |
+| Linéaire (TF-IDF + SGD) | **0,428** | 0,333 | **0,435** |
+| PyTorch (nôtre) | 0,398 | **0,340** | 0,399 |
+
+**Figure** : `reports/figures/phase3_curves.png` — perte train/val pour les deux modèles (40 époques, même découpe).
+
+**Conclusion** : PyTorch **bat le linéaire en macro-F1** (0,340 vs 0,333), métrique adaptée aux 21 classes déséquilibrées. L'accuracy reste légèrement inférieure (0,398 vs 0,428) — le TF-IDF copie efficacement les mots de forme présents dans le texte (cf. phase 8). Signes d'overfitting : écart train/val visible sur les courbes PyTorch.
+
+**Ce que prouve / ne prouve pas** : le montage PyTorch apprend et généralise partiellement ; il reste à masquer le vocabulaire des formes (phase 8) pour une évaluation honnête.
+
+```bash
+python -m src.shape.train
+```
 
 ### Phase 4 — Carnet de pannes
 
