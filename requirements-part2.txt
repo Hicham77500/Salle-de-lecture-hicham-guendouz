@@ -1,0 +1,11 @@
+# Partie 2 — PyTorch, Transformers, HuggingFace
+torch>=2.0.0
+transformers>=4.36.0
+accelerate>=0.25.0
+peft>=0.7.0
+sentencepiece>=0.1.99
+tokenizers>=0.15.0
+
+# Optionnel — déploiement
+# onnxruntime>=1.16.0
+# optimum>=1.14.0

@@ -116,6 +116,33 @@ def calibration_bins(y_true, y_proba, n_bins: int = 10) -> pd.DataFrame:
     )
 
 
+def repeated_cv_pr_auc(
+    pipeline, X, y, n_splits: int = 5, random_state: int = 0
+) -> dict:
+    """Intervalle de confiance PR-AUC via validation croisée stratifiée répétée."""
+    from sklearn.model_selection import StratifiedKFold
+
+    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
+    scores = []
+    for train_idx, test_idx in skf.split(X, y):
+        X_tr, X_te = X.iloc[train_idx], X.iloc[test_idx]
+        y_tr, y_te = y.iloc[train_idx], y.iloc[test_idx]
+        from sklearn.base import clone
+        pipe = clone(pipeline)
+        pipe.fit(X_tr, y_tr)
+        proba = pipe.predict_proba(X_te)[:, 1]
+        scores.append(average_precision_score(y_te, proba))
+
+    scores = np.array(scores)
+    return {
+        "pr_auc_mean": float(scores.mean()),
+        "pr_auc_std": float(scores.std()),
+        "pr_auc_min": float(scores.min()),
+        "pr_auc_max": float(scores.max()),
+        "n_splits": n_splits,
+    }
+
+
 def precision_recall_data(y_true, y_proba) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Données pour la courbe precision-recall."""
     precision, recall, thresholds = precision_recall_curve(y_true, y_proba)

@@ -23,13 +23,14 @@ from src.evaluate import (
     evaluate_model,
     optimize_threshold,
     precision_recall_data,
+    repeated_cv_pr_auc,
     threshold_comparison,
 )
 from src.explain import ablation_by_column, audit_by_country, monitoring_report
 from src.features import missing_signal_report
 from src.load_data import load_report
 from src.pipeline import build_pipeline, get_X
-from src.split import label_shift_report, temporal_split, yearly_canular_rate
+from src.split import group_split, label_shift_report, temporal_split, yearly_canular_rate
 
 FIGURES_DIR = ROOT / "reports" / "figures"
 MODELS_DIR = ROOT / "models"
@@ -111,7 +112,11 @@ def main():
     print("=== Section 7 : Découpe temporelle ===")
     i_train, i_test = temporal_split(df)
     shift = label_shift_report(df, i_train, i_test)
-    print(f"  Label shift : {shift}")
+    print(f"  Label shift (temporel) : {shift}")
+
+    i_train_g, i_test_g = group_split(df)
+    shift_g = label_shift_report(df, i_train_g, i_test_g)
+    print(f"  Label shift (groupe)   : {shift_g}")
 
     X = get_X(df)
     y = df["canular"]
@@ -144,6 +149,29 @@ def main():
         f"calibré : {calib['brier_calibrated']:.4f}"
     )
 
+    print("=== Section 11 : Intervalle PR-AUC (CV stratifiée) ===")
+    cv_interval = repeated_cv_pr_auc(pipeline, X, y, n_splits=5)
+    print(
+        f"  PR-AUC : {cv_interval['pr_auc_mean']:.3f} "
+        f"± {cv_interval['pr_auc_std']:.3f} "
+        f"[{cv_interval['pr_auc_min']:.3f}, {cv_interval['pr_auc_max']:.3f}]"
+    )
+
+    print("=== Section 7b : Comparaison découpe groupe vs temporelle ===")
+    pipeline_g = build_pipeline()
+    pipeline_g.fit(X.loc[i_train_g], y.loc[i_train_g])
+    y_proba_g = pipeline_g.predict_proba(X.loc[i_test_g])[:, 1]
+    y_pred_g = (y_proba_g >= 0.5).astype(int)
+    metrics_g = evaluate_model(y.loc[i_test_g], y_pred_g, y_proba_g)
+    print(
+        f"  Groupe   — precision: {metrics_g['precision']:.3f}, "
+        f"recall: {metrics_g['recall']:.3f}, pr_auc: {metrics_g['pr_auc']:.3f}"
+    )
+    print(
+        f"  Temporel — precision: {metrics['precision']:.3f}, "
+        f"recall: {metrics['recall']:.3f}, pr_auc: {metrics['pr_auc']:.3f}"
+    )
+
     print("=== Section 12 : Audit ===")
     ablation = ablation_by_column(pipeline, X_test, y_test, list(X_test.columns))
     print(ablation.to_string(index=False))
@@ -172,6 +200,11 @@ def main():
             "brier_calibrated": calib["brier_calibrated"],
         },
         "label_shift": shift,
+        "label_shift_group": shift_g,
+        "cv_interval": cv_interval,
+        "metrics_group_split": {
+            k: v for k, v in metrics_g.items() if k != "classification_report"
+        },
         "yearly_rates": yearly_canular_rate(df).to_dict(orient="records"),
     }
     with open(ROOT / "reports" / "results.json", "w", encoding="utf-8") as f:
