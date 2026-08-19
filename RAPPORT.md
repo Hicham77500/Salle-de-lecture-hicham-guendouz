@@ -76,25 +76,49 @@ python -m src.shape.eda
 
 ### Phase 1 — Le chiffre était vrai, la flotte est perdue
 
-*Page sans code — 3 parties :*
+*Page sans code — 3 parties.*
 
 #### 1. Ce que le chiffre du 4 juillet disait réellement
 
-*À rédiger*
+La phase 0 a confirmé que l'analyste disparu **savait compter**. Sur `datetime`, le 4 juillet produit en moyenne **50,2 relevés par an** (1 154 sur 23 ans), soit plus de cinq fois la moyenne quotidienne (~9,8/j). Cinq des dix journées les plus chargées du fichier tombent un 4 juillet. Juillet concentre **11,5 %** des observations ; le samedi en porte **17,8 %**. Le volume annuel monte jusqu'en 2012–2013. **Aucun de ces chiffres n'est faux.**
+
+Mais un comptage ne répond qu'à une question : *combien de lignes arrivent ce jour-là ?* Il ne dit pas *pourquoi* elles arrivent, ni *ce qu'elles décrivent*. Le dossier du disparu en a tiré une seule lecture — « la population regarde le ciel, elle est habituée à y voir des choses » — et en a conclu qu'une flotte pourrait passer inaperçue. **Cette conclusion n'est pas la seule compatible avec les chiffres.**
+
+**Explication A — le ciel est réellement plus observé le 4 juillet.** Feux d'artifice, terrasses, promenades nocturnes : plus de témoins, plus de signalements. C'est l'hypothèse du dossier.
+
+**Explication B — le pic est aussi un pic de bruit.** Sur nos données, `light` (285 relevés), `fireball` (193) et `circle` (169) dominent le 4 juillet. Beaucoup de témoignages mentionnent des feux d'artifice, des lanternes, des fusées. Un compteur ne distingue pas une observation structurée d'un reflet pyrotechnique mal classé.
+
+**Explication C — d'autres jours produisent des pics comparables pour d'autres raisons.** Halloween (31 octobre), le Nouvel An (1ᵉʳ janvier), certaines nuits d'été : le top 10 inclut 2004-10-31 (85 relevés) et 2014-01-01 (93). Le 4 juillet n'est pas unique : c'est un **jour où l'humain regarde le ciel ET où il fabrique déjà des lumières dans le ciel**. Poser une flotte ce jour-là maximiserait le volume de signalements — pas la discrétion.
+
+**Explication D — compter des dates ne dit rien sur la forme observée.** Deux relevés le même soir peuvent décrire un « cigare », une « sphère » ou une simple « lumière ». Le comptage agrège des phénomènes hétérogènes sous une même étiquette calendaire. C'est précisément ce que le Conseil reproche au Bureau : **208 témoins, 208 textes, zéro lecture.**
+
+En résumé : le chiffre du 4 juillet mesure la **densité d'observation humaine**, pas la **nature des objets signalés**. La flotte a été perdue non parce que les chiffres étaient faux, mais parce qu'on a confondu *beaucoup de relevés* avec *beaucoup de relevés exploitables pour se cacher*.
 
 #### 2. Trois relevés recopiés tels quels
 
-| # | datetime | comments (extrait) |
-|---|----------|-------------------|
-| 1 | | |
-| 2 | | |
-| 3 | | |
+| # | datetime | shape (colonne) | comments (extrait tel que transmis) |
+|---|----------|-----------------|-------------------------------------|
+| 1 | 10/10/1949 20:30 | cylinder | « This event took place in early fall around 1949-50. It occurred after a Boy Scout meeting in the Baptist Church. The Baptist Church sit » |
+| 2 | 7/4/1971 22:00 | cigar | « cigar shaped object appeared low over lake in Great Bend after July 4th fireworks. » |
+| 3 | 10/31/1967 20:00 | light | « I remember this event very distinctly. However I am unsure of the date. It's approximate. However I am very sure it was during a Hal » |
+
+**Ce qu'un comptage ne voit pas :**
+
+- **Relevé 1** : la forme annotée est `cylinder`, mais le mot n'apparaît pas dans le texte tronqué. Un compteur du 4 juillet ne verrait qu'une ligne de plus un soir d'octobre ; seule la lecture révèle qu'il faut *inférer* la forme à partir d'un contexte incomplet.
+- **Relevé 2** : le témoin lie explicitement l'observation aux **feux d'artifice du 4 juillet**. Le pic calendaire et le contenu se confondent : sans lire, on classerait ce soir comme « favorable à l'infiltration » alors que le témoignage décrit un bruit de fond pyrotechnique.
+- **Relevé 3** : le témoin **doute de sa propre date** (« unsure of the date ») mais insiste sur le contexte Halloween. Un agrégat par `datetime` range ce relevé au 31 octobre ; la lecture montre une incertitude que la statistique traite comme une certitude.
 
 #### 3. Commande au Conseil
 
-**Entrée** :  
-**Sortie** :  
-**Formulation tâche** : *À partir du texte d'un témoin (`comments`), prédire la forme observée (`shape`).*
+| | |
+|---|---|
+| **Entrée** | Le texte du témoin (`comments`), tel que transmis — télégramme tronqué (~135 caractères, médiane ~13 mots), entités HTML non décodées, parfois sans le mot de la forme |
+| **Sortie** | La forme observée (`shape`) : une parmi ~29 catégories (light, triangle, fireball, unknown, other, etc.) |
+| **Formulation tâche** | *À partir du texte écrit par un témoin, retrouver la forme qu'il a observée.* |
+
+**Question que le comptage ne tranchera jamais :** « Ce témoignage décrit-il une forme reconnaissable, un bruit de fête, ou une description trop pauvre pour trancher ? » — Seule une machine (ou un analyste) qui **lit** le `comments` peut répondre. Le comptage du 4 juillet disait *combien* ; la suite du programme demande *quoi*.
+
+**Phrase pour le Conseil :** *Le texte du témoin entre ; la forme observée sort.*
 
 ---
 

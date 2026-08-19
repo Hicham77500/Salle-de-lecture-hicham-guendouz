@@ -11,7 +11,7 @@ Projet en deux parties :
 | Partie | Statut | Documentation |
 |--------|--------|---------------|
 | Partie 1 — Canulars | **~90 % complet** | [Cahier des charges](docs/CAHIER_DES_CHARGES.md) |
-| Partie 2 — Formes / Attention | **Phase 0 faite** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
+| Partie 2 — Formes / Attention | **Phases 0-1 faites** | [Roadmap](docs/PARTIE2_ROADMAP.md) |
 
 **Rapport Conseil** : [`RAPPORT.md`](RAPPORT.md) — une section par phase (template prêt).
 

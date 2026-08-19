@@ -60,8 +60,8 @@ Dépendances ajoutées : `torch`, `transformers`, `accelerate`, `peft` (LoRA), `
 
 ### Phase 1 — RAPPORT écrit
 
-- [ ] 3 parties sans code (voir PDF)
-- [ ] Formuler tâche : `comments` → `shape`
+- [x] 3 parties sans code (voir PDF)
+- [x] Formuler tâche : `comments` → `shape`
 
 ---
 
